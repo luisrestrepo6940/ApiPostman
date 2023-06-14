@@ -1,0 +1,385 @@
+{
+	"info": {
+		"_postman_id": "35e66794-22b1-4db9-b196-574bb0a4ca93",
+		"name": "VideoTienda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27965746"
+	},
+	"item": [
+		{
+			"name": "Obtener todas las peliculas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Obtener peliculas videotienda\", () => { ",
+							"     pm.response.to.have.status(200)// Validar estatus 200.",
+							"});",
+							"",
+							"pm.test(\"El response es correcto para procesarlo\", () => {",
+							"    pm.response.to.be.withBody; // Debe existir el response.",
+							"    pm.response.to.be.json; // El response debe ser un JSON válido.",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.not.have.jsonBody(\"\");",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"pm.test(\"Verficar el ambiente activo\", () => {",
+							"  pm.expect(pm.environment.name).to.eql(\"VideoTiendaLocal\");",
+							"});",
+							"",
+							"pm.test(\"Validar Header json\", () => {",
+							"        pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Tiempo de respuesta es menor que 200ms\", () => {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"var schema = {",
+							"   \"type\": \"array\",",
+							"   \"items\": { \"$ref\": \"videoSchema\" }",
+							"};",
+							"var videoSchema = {",
+							"   \"properties\": {",
+							"       \"id\" : { \"type\": \"integer\" },",
+							"       \"nombre\": { \"type\": \"string\" },",
+							"       \"director\" : { \"type\": \"string\" },",
+							"       \"clasificacion\": { \"type\": \"string\" }",
+							"   }",
+							"};",
+							"tv4.addSchema('videoSchema', videoSchema);",
+							"pm.test('Validar esquema response peliculas', () => {",
+							"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/peliculas",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"peliculas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener pelicula por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/peliculas/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"peliculas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todas las clasificaciones",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Obtener clasificaciones videotienda\", () => { ",
+							"     pm.response.to.have.status(200)// Validar estatus 200.",
+							"});",
+							"",
+							"pm.test(\"El response es correcto para procesarlo\", () => {",
+							"    pm.response.to.be.withBody; // Debe existir el response.",
+							"    pm.response.to.be.json; // El response debe ser un JSON válido.",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.not.have.jsonBody(\"\");",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"pm.test(\"Verficar el ambiente activo\", () => {",
+							"  pm.expect(pm.environment.name).to.eql(\"VideoTiendaLocal\");",
+							"});",
+							"",
+							"pm.test(\"Validar Header json\", () => {",
+							"        pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Tiempo de respuesta es menor que 200ms\", () => {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"var schema = {",
+							"   \"type\": \"array\",",
+							"   \"items\": { \"$ref\": \"clasificationSchema\" }",
+							"};",
+							"var clasificationSchema = {",
+							"   \"properties\": {",
+							"       \"nombre\": { \"type\": \"string\" },",
+							"       \"id\" : { \"type\": \"integer\" }",
+							"   }",
+							"};",
+							"tv4.addSchema('clasificationSchema', clasificationSchema);",
+							"pm.test('Validar esquema response clasificaciones', () => {",
+							"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/clasificaciones",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"clasificaciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener clasificación por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/clasificaciones/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"clasificaciones",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear pelicula",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n    \"id\": 8,\n    \"nombre\": \"Testing\",\n    \"director\": \"Luis Buñuel\",\n    \"clasificacion\": \"Documental\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/peliculas",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"peliculas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear clasificación",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n      \"nombre\": \"Terror\",\n      \"id\": 5\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/clasificaciones",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"clasificaciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar completamente registro de una pelicula",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n    \"id\": 8,\n    \"nombre\": \"Los asesinos de la luna de las flores\",\n    \"director\": \"Martin Scorsese\",\n    \"clasificacion\": \"Drama\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/peliculas/8",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"peliculas",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar completamente registro de una clasificación",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n      \"nombre\": \"Humor\",\n      \"id\": 5\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/clasificaciones/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"clasificaciones",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar parcialmente registro pelicula",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n    \"nombre\": \"El lobo de Wall Street\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/peliculas/8",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"peliculas",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar parcialmente registro categoria",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\n      \"nombre\": \"Aventura\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/clasificaciones/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"clasificaciones",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una pelicula",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/peliculas/8",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"peliculas",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una categoria",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/clasificaciones/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"clasificaciones",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
